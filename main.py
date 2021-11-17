@@ -2,7 +2,15 @@
 from fastapi import FastAPI
 from routes.routes import articleRouter
 from fastapi.middleware.cors import CORSMiddleware
-app = FastAPI()
+
+apiDescription = """
+## IIC Blog Backend
+
+### Version: 0.1.0
+"""
+
+app = FastAPI(title="IIC Blog", description=apiDescription, contact={
+              "name": "IIC Techno Main Saltlake", "url": "https://iictmsl.in/"})
 
 origins = [
     "http://localhost:3000",
