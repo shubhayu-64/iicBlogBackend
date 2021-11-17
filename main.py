@@ -1,6 +1,6 @@
 #import statements
 from fastapi import FastAPI
-from routes.article_routes import article_router
+from routes.routes import articleRouter
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
@@ -8,7 +8,7 @@ origins = [
     "http://localhost:3000",
 ]
 
-# what is a middleware? 
+# what is a middleware?
 # software that acts as a bridge between an operating system or database and applications, especially on a network.
 
 app.add_middleware(
@@ -19,6 +19,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#register router
-app.include_router(article_router)
-
+# register router
+app.include_router(articleRouter)
