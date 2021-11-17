@@ -4,6 +4,7 @@ from models.models import articleDbModel, articleRequestModel, articleResponseMo
 from datetime import date
 from dotenv import load_dotenv
 import os
+import random
 
 load_dotenv()
 
@@ -39,9 +40,9 @@ async def createArticle(article: articleRequestModel):
     articleData = article.copy()
     articleData = articleData.dict()
     dbData = {
-        "username": "admin",
-        "articleId": str(len(articleData)),
-        "author": "Shubhayu Majumdar",
+        "username": "linux" + str(random.randint(1000, 9999)),
+        "articleId": str(random.randint(111111, 999999)),
+        "author": "Bot" + str(random.randint(10, 30)),
         "postedDate": date.today().strftime("%B %d, %Y"),
         "likes": 0,
     }
