@@ -2,6 +2,7 @@
 from fastapi import APIRouter, HTTPException, exceptions, status
 from fastapi.responses import RedirectResponse
 from models.models import *
+from typing import List
 from database.database import createArticle, getAllArticles, getArticle
 
 
@@ -17,7 +18,7 @@ async def root():
     return RedirectResponse("/docs")
 
 
-@articleRouter.get("/home/articles")
+@articleRouter.get("/home/articles", response_model=List[miniArticleModel])
 async def getHomepageArticles():
     '''
     Gets articles for homepage. 
