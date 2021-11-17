@@ -3,15 +3,14 @@ from pymongo import MongoClient
 from models.models import articleDbModel, articleRequestModel, articleResponseModel, miniArticleModel
 from datetime import date
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 # create db connection
-connection = MongoClient(
-    "mongodb+srv://admin:IICblog_admin@iicblogdb.fidhh.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-un1fbw-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true")
-
-database = connection.iicblog
-collection = database.articles
+connection = MongoClient(os.getenv("mongoCred"))
+database = connection[os.getenv("database")]
+collection = database[os.getenv("collection")]
 
 
 async def getAllArticles():
