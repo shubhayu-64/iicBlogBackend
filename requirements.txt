@@ -1,7 +1,8 @@
-pymongo~=3.12.1
-
-fastapi~=0.70.0
-
+pymongo
+fastapi
 uvicorn
-pydantic~=1.8.2
-python-dotenv~=0.19.2
+pydantic
+python-dotenv
+dnspython
+gunicorn
+starlette
