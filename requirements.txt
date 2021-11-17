@@ -6,3 +6,4 @@ python-dotenv
 dnspython
 gunicorn
 starlette
+typing
