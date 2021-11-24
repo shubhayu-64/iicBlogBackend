@@ -13,7 +13,7 @@ app = FastAPI(title="IIC Blog", description=apiDescription, contact={
               "name": "IIC Techno Main Saltlake", "url": "https://iictmsl.in/"})
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:3000","https://quirky-jones-7fc62e.netlify.app/"
 ]
 
 # what is a middleware?
