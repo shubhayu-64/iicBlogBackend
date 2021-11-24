@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000","https://quirky-jones-7fc62e.netlify.app/",
+    "http://localhost:3000","https://quirky-jones-7fc62e.netlify.app",
 ]
 
 # what is a middleware?
