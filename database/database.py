@@ -34,6 +34,17 @@ async def getTagArticles(tagName, limit, offset):
     return articles
 
 
+async def getUserArticles(username, limit, offset):
+    data = list(collection.find(
+        {"username": username}).skip(offset).limit(limit))
+    articles = []
+    for entry in data:
+        entry["body"] = entry["body"][0].partition('.')[0] + "."
+        entry["tags"] = entry["tags"][0]
+        articles.append(miniArticleModel(**entry))
+    return articles
+
+
 async def fetch_one_article(article_id):
     document = collection.find_one({"article_id": article_id})
     return document

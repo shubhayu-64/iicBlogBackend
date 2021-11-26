@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, exceptions, status
 from fastapi.responses import RedirectResponse
 from models.models import *
 from typing import List, Optional
-from database.database import createArticle, getAllArticles, getArticle, getTagArticles
+from database.database import createArticle, getAllArticles, getArticle, getTagArticles, getUserArticles
 
 
 # App declaration
@@ -18,8 +18,25 @@ async def root():
     return RedirectResponse("/docs")
 
 
+@articleRouter.get("/@{username}", response_model=List[miniArticleModel])
+async def get_user_articles(username: str, limit: Optional[int] = 20, offset: Optional[int] = 0):
+    '''
+    Gets articles for homepage. 
+    Returns a mini article format for listing.
+    '''
+    exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND, detail="My database dumped me bro. (╥_╥)")
+    try:
+        allArticles = await getUserArticles(username, limit, offset)
+        if not allArticles:
+            raise exception
+        return allArticles
+    except:
+        raise exception
+
+
 @articleRouter.get("/home/articles", response_model=List[miniArticleModel])
-async def getHomepageArticles(limit: Optional[int] = 20, offset: Optional[int] = 0):
+async def get_homepage_articles(limit: Optional[int] = 20, offset: Optional[int] = 0):
     '''
     Gets articles for homepage. 
     Returns a mini article format for listing.
@@ -36,7 +53,7 @@ async def getHomepageArticles(limit: Optional[int] = 20, offset: Optional[int] =
 
 
 @articleRouter.get("/tag/{tagName}", response_model=List[miniArticleModel])
-async def getHomepageArticles(tagName: str, limit: Optional[int] = 20, offset: Optional[int] = 0):
+async def get_tag_articles(tagName: str, limit: Optional[int] = 20, offset: Optional[int] = 0):
     '''
     Gets articles for homepage. 
     Returns a mini article format for listing.
