@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, exceptions, status
 from fastapi.responses import RedirectResponse
 from models.models import *
 from typing import List, Optional
-from database.database import createArticle, getAllArticles, getArticle
+from database.database import createArticle, getAllArticles, getArticle, getTagArticles
 
 
 # App declaration
@@ -28,6 +28,23 @@ async def getHomepageArticles(limit: Optional[int] = 20, offset: Optional[int] =
         status_code=status.HTTP_404_NOT_FOUND, detail="My database dumped me bro. (╥_╥)")
     try:
         allArticles = await getAllArticles(limit, offset)
+        if not allArticles:
+            raise exception
+        return allArticles
+    except:
+        raise exception
+
+
+@articleRouter.get("/tag/{tagName}", response_model=List[miniArticleModel])
+async def getHomepageArticles(tagName: str, limit: Optional[int] = 20, offset: Optional[int] = 0):
+    '''
+    Gets articles for homepage. 
+    Returns a mini article format for listing.
+    '''
+    exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND, detail="My database dumped me bro. (╥_╥)")
+    try:
+        allArticles = await getTagArticles(tagName, limit, offset)
         if not allArticles:
             raise exception
         return allArticles
