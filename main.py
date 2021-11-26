@@ -5,7 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 apiDescription = """
 ## IIC Blog Backend
-
 ### Version: 0.1.0
 """
 
@@ -13,7 +12,7 @@ app = FastAPI(title="IIC Blog", description=apiDescription, contact={
               "name": "IIC Techno Main Saltlake", "url": "https://iictmsl.in/"})
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:3000", "https://iicblog.netlify.app"
 ]
 
 # what is a middleware?
