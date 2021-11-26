@@ -14,8 +14,8 @@ database = connection[os.getenv("database")]
 collection = database[os.getenv("collection")]
 
 
-async def getAllArticles():
-    data = list(collection.find({}))
+async def getAllArticles(limit, offset):
+    data = list(collection.find({}).skip(offset).limit(limit))
     articles = []
     for entry in data:
         entry["body"] = entry["body"][0].partition('.')[0] + "."

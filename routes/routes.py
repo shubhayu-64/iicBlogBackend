@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException, exceptions, status
 from fastapi.responses import RedirectResponse
 from models.models import *
-from typing import List
+from typing import List, Optional
 from database.database import createArticle, getAllArticles, getArticle
 
 
@@ -19,16 +19,15 @@ async def root():
 
 
 @articleRouter.get("/home/articles", response_model=List[miniArticleModel])
-async def getHomepageArticles():
+async def getHomepageArticles(limit: Optional[int] = 20, offset: Optional[int] = 0):
     '''
     Gets articles for homepage. 
-
     Returns a mini article format for listing.
     '''
     exception = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND, detail="My database dumped me bro. (╥_╥)")
     try:
-        allArticles = await getAllArticles()
+        allArticles = await getAllArticles(limit, offset)
         if not allArticles:
             raise exception
         return allArticles
@@ -40,7 +39,6 @@ async def getHomepageArticles():
 async def get_article(username: str, article: str):
     '''
     Gets article for specific username and article ID.
-
     Returns all details of article.
     '''
     exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -58,7 +56,6 @@ async def get_article(username: str, article: str):
 async def create_article(article: articleRequestModel):
     '''
     Stores the article in databse
-
     Returns success state.
     '''
     try:
