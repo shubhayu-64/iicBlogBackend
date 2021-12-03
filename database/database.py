@@ -58,16 +58,17 @@ async def getArticle(username: str, articleId: str):
 
 
 async def getArticleCount(username: str):
-    return len(list(collection.find({"username": username}))
+    return len(list(collection.find({"username": username})))
+
 
 async def createArticle(article: articleRequestModel):
-    articleData=article.copy()
-    articleData=articleData.dict()
-    dbData={
+    articleData = article.copy()
+    articleData = articleData.dict()
+    dbData = {
         "articleId": hashlib.md5((articleData["username"] + str(getArticleCount(articleData["username"]))).encode("utf-8")).hexdigest(),
         "postedDate": date.today().strftime("%B %d, %Y"),
         "likes": 0,
     }
     articleData.update(dbData)
-    article=articleDbModel(**articleData)
+    article = articleDbModel(**articleData)
     collection.insert_one(dict(article))
