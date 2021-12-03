@@ -1,10 +1,10 @@
-#import statements
+# import statements
 from pymongo import MongoClient
 from models.models import articleDbModel, articleRequestModel, articleResponseModel, miniArticleModel
 from datetime import date
 from dotenv import load_dotenv
 import os
-import random
+import hashlib
 
 load_dotenv()
 
@@ -57,16 +57,17 @@ async def getArticle(username: str, articleId: str):
     return articleData
 
 
+async def getArticleCount(username: str):
+    return len(list(collection.find({"username": username}))
+
 async def createArticle(article: articleRequestModel):
-    articleData = article.copy()
-    articleData = articleData.dict()
-    dbData = {
-        "username": "linux" + str(random.randint(1000, 9999)),
-        "articleId": str(random.randint(111111, 999999)),
-        "author": "Bot" + str(random.randint(10, 30)),
+    articleData=article.copy()
+    articleData=articleData.dict()
+    dbData={
+        "articleId": hashlib.md5((articleData["username"] + str(getArticleCount(articleData["username"]))).encode("utf-8")).hexdigest(),
         "postedDate": date.today().strftime("%B %d, %Y"),
         "likes": 0,
     }
     articleData.update(dbData)
-    article = articleDbModel(**articleData)
+    article=articleDbModel(**articleData)
     collection.insert_one(dict(article))

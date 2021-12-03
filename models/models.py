@@ -39,6 +39,8 @@ class articleResponseModel(BaseModel):
 
 
 class articleRequestModel(BaseModel):
+    username: str = Field(...)
+    author: str = Field(...)
     title: str = Field(...)
     body: List[str] = Field(default_factory=list, min_items=1)
     imageUrl: HttpUrl = Field(...)
